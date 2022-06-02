@@ -1,9 +1,8 @@
 NAME=philosophers
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -Ilibft/includes -I$(INC_DIR) -I$
-LDFLAGS=-Llibft -lft 
+CFLAGS=-Wall -Wextra -Werror -I$(INC_DIR)
 
-SRC_DIR=srcs
+SRC_DIR=src
 INC_DIR=includes
 
 _INC = philosophers.h
@@ -17,7 +16,7 @@ all: $(NAME)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(NAME): $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 
