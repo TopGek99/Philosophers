@@ -6,7 +6,7 @@
 /*   By: arowe <arowe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:17 by arowe             #+#    #+#             */
-/*   Updated: 2022/06/02 16:11:04 by arowe            ###   ########.fr       */
+/*   Updated: 2022/06/03 12:53:47 by arowe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int	main(int argc, char *argv[])
 {
 	pthread_t	philo_thread;
+	t_philo		philo;
 	int			args[5];
 	int			i;
 
@@ -37,9 +38,13 @@ int	main(int argc, char *argv[])
 	if (argc == 5)
 		args[4] = -1;
 	i = 0;
+	philo.time_to_die = args[1];
+	philo.time_to_eat = args[2];
+	philo.time_to_sleep = args[3];
 	while (i < args[0])
 	{
-		pthread_create(&philo, NULL, create_philo, );
+		philo.num = i + 1;
+		pthread_create(&philo_thread, NULL, create_philo, &philo);
 	}
 	return (0);
 }

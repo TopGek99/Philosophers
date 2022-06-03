@@ -6,7 +6,7 @@
 /*   By: arowe <arowe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:14 by arowe             #+#    #+#             */
-/*   Updated: 2022/06/02 16:07:06 by arowe            ###   ########.fr       */
+/*   Updated: 2022/06/03 12:44:10 by arowe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ int	ph_atoi(const char *str)
 	return (temp * res);
 }
 
-void	*create_philo(void *nothing)
+void	*create_philo(void *data)
 {
+	t_philo	*philo;
 
+	philo = (t_philo *)data;
 }
