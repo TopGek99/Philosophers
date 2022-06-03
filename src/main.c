@@ -6,7 +6,7 @@
 /*   By: arowe <arowe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:17 by arowe             #+#    #+#             */
-/*   Updated: 2022/06/03 12:53:47 by arowe            ###   ########.fr       */
+/*   Updated: 2022/06/03 15:28:32 by arowe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 // args[4] = number_of_times_each_philosopher_must_eat (-1 if not given)
 int	main(int argc, char *argv[])
 {
-	pthread_t	philo_thread;
-	t_philo		philo;
-	int			args[5];
-	int			i;
+	pthread_t		philo_thread;
+	pthread_mutex_t	fork;
+	struct timeval	start_time;
+	t_philo			philo;
+	int				i;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -30,21 +31,23 @@ int	main(int argc, char *argv[])
 		return (0);
 	}
 	i = 0;
-	while (argv[i + 1])
-	{
-		args[i] = ph_atoi(argv[i + 1]);
-		i++;
-	}
 	if (argc == 5)
-		args[4] = -1;
+		philo.amount_to_eat = -1;
+	else
+		philo.amount_to_eat = argv[5];
+	philo.time_to_die = ph_atoi(argv[2]);
+	philo.time_to_eat = ph_atoi(argv[3]);
+	philo.time_to_sleep = ph_atoi(argv[4]);
+	philo.fork = &fork;
+	gettimeofday(&start_time, NULL);
+	philo.start_time = &start_time;
+	pthread_mutex_init(philo.fork, NULL);
 	i = 0;
-	philo.time_to_die = args[1];
-	philo.time_to_eat = args[2];
-	philo.time_to_sleep = args[3];
-	while (i < args[0])
+	while (i < ph_atoi(argv[1]))
 	{
-		philo.num = i + 1;
-		pthread_create(&philo_thread, NULL, create_philo, &philo);
+		philo.num = ++i;
+		pthread_create(&philo_thread, NULL, odd_philo, &philo);
+		philo.num = ++i;
 	}
 	return (0);
 }
