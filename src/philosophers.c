@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arowe <arowe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:14 by arowe             #+#    #+#             */
-/*   Updated: 2022/06/03 15:20:39 by arowe            ###   ########.fr       */
+/*   Updated: 2022/06/06 19:50:49 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,13 @@ int	ph_atoi(const char *str)
 	return (temp * res);
 }
 
-void	*odd_philo(void *data)
+void	*do_stuff_philo(void *input)
 {
-	t_philo			*philo;
-	struct timeval	t;
-	
+	t_data	*data;
 
-	philo = (t_philo *)data;
-	pthread_mutex_lock(philo->fork);
-	gettimeofday(&t, NULL);
-	printf("%dms philosopher %d has taken a fork\n", (t.tv_sec - philo->start_time->tv_sec) * 1000, philo->num);
-	printf("%dms philosopher %d is eating\n", (t.tv_sec - philo->start_time->tv_sec) * 1000, philo->num);
-	usleep(philo->time_to_eat * 1000);
-	gettimeofday(&t, NULL);
-	printf("%dms philosopher %d is sleeping\n", (t.tv_sec - philo->start_time->tv_sec) * 1000, philo->num);
-	usleep(philo->time_to_sleep * 1000);
+	data = (t_data *)input;
+	pthread_mutex_lock(data->lock);
+	printf("philo %d\n", data->philo->num);
+	pthread_mutex_unlock(data->lock);
+	return (NULL);
 }

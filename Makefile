@@ -13,10 +13,10 @@ OBJ = philosophers.o main.o
 all: $(NAME)
 
 %.o: $(SRC_DIR)/%.c $(INC)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -pthread -c -o $@ $< $(CFLAGS)
 
 $(NAME): $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -pthread -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 

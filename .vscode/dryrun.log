@@ -1,0 +1,7 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/alex/work/42/Philosophers'
+gcc -pthread -c -o philosophers.o src/philosophers.c -Wall -Wextra -Werror -Iincludes
+gcc -pthread -c -o main.o src/main.c -Wall -Wextra -Werror -Iincludes
+gcc -pthread -o philosophers philosophers.o main.o -Wall -Wextra -Werror -Iincludes
+make: Leaving directory '/home/alex/work/42/Philosophers'
+ 
