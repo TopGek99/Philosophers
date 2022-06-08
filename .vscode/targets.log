@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun  7 09:22:58 2022
+# Make data base, printed on Wed Jun  8 12:38:18 2022
 
 # Variables
 
@@ -15,7 +15,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = ELECTRON_RUN_AS_NODE/w:
+WSLENV = VSCODE_WSL_EXT_LOCATION/up
 # default
 .SHELLFLAGS := -c
 # makefile (from 'Makefile', line 11)
@@ -35,7 +35,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /mnt/c/Users/Alex.Rowe/AppData/Local/Programs/Microsoft VS Code/bin/code
+_ = /home/alex/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/node
 # makefile (from 'Makefile', line 3)
 CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR)
 # makefile (from 'Makefile', line 1)
@@ -53,11 +53,11 @@ VSCODE_CWD = /mnt/c/Users/Alex.Rowe/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/alex/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/CanonicalGroupLimited.UbuntuonWindows_2004.2022.1.0_x64__79rhkp1fndgsc:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/dotnet/:/mnt/c/Users/Alex.Rowe/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Alex.Rowe/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
+PATH = /home/alex/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/dotnet/:/mnt/c/Users/Alex.Rowe/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Alex.Rowe/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-f13d9701-e548-46a2-8292-28cbce900df3.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-179c8582-a045-43c7-b520-48de78b22969.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -71,7 +71,7 @@ PWD = /home/alex/work/42/Philosophers/github-repo
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/8_interop
+WSL_INTEROP = /run/WSL/11_interop
 # makefile (from 'Makefile', line 6)
 INC_DIR = includes
 # environment
@@ -95,7 +95,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 1
+SHLVL = 0
 # makefile (from 'Makefile', line 2)
 CC = gcc
 # makefile (from 'Makefile', line 8)
@@ -158,10 +158,8 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=75/1024=7%, Rehash=0, Collisions=8/108=7%
+# Load=74/1024=7%, Rehash=0, Collisions=8/107=7%
 
 # Pattern-specific Variable Values
 
@@ -200,7 +198,7 @@ all: philosophers
 # Not a target:
 includes/philosophers.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-07 09:20:45.589238193
+#  Last modified 2022-06-07 15:14:33.539157215
 #  File has been updated.
 #  Successfully updated.
 
@@ -214,7 +212,7 @@ Makefile:
 # Not a target:
 src/philosophers.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-07 09:20:45.589238193
+#  Last modified 2022-06-07 15:17:31.709156536
 #  File has been updated.
 #  Successfully updated.
 
@@ -228,7 +226,7 @@ fclean:
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-07 09:20:45.589238193
+#  Last modified 2022-06-07 15:15:35.30915698
 #  File has been updated.
 #  Successfully updated.
 
@@ -241,7 +239,7 @@ src/main.c:
 philosophers.o: src/philosophers.c includes/philosophers.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'philosophers'
-#  Last modified 2022-06-07 09:20:45.589238193
+#  Last modified 2022-06-07 15:17:34.149156526
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 16):
@@ -249,7 +247,7 @@ philosophers.o: src/philosophers.c includes/philosophers.h
 
 philosophers: philosophers.o main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-07 09:20:45.589238193
+#  Last modified 2022-06-07 15:17:34.179156526
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 19):
@@ -271,17 +269,17 @@ clean:
 main.o: src/main.c includes/philosophers.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-06-07 09:20:45.589238193
+#  Last modified 2022-06-07 15:16:49.269156697
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 16):
 	$(CC) -pthread -c -o $@ $< $(CFLAGS)
 
 # files hash-table stats:
- 
 # Load=14/1024=1%, Rehash=0, Collisions=0/43=0%
 # VPATH Search Paths
 
+ 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
@@ -292,6 +290,6 @@ main.o: src/main.c includes/philosophers.h
 # strcache performance: lookups = 57 / hit rate = 50%
 # hash-table stats:
 # Load=28/8192=0%, Rehash=0, Collisions=2/57=4%
-# Finished Make data base on Tue Jun  7 09:22:58 2022
+# Finished Make data base on Wed Jun  8 12:38:18 2022
 
  

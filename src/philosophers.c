@@ -53,13 +53,53 @@ int	ph_atoi(const char *str)
 	return (temp * res);
 }
 
+long	get_timestamp(struct timeval now, struct timeval start)
+{
+	return ((((now.tv_sec * 1000000) + now.tv_usec) - ((start.tv_sec * 1000000) + start.tv_usec)) / 1000);
+}
+
 void	*do_stuff_philo(void *input)
 {
-	t_data	*data;
+	t_philo			*philo;
+	struct timeval	time;
+	long			death_timer;
 
-	data = (t_data *)input;
-	pthread_mutex_lock(data->lock);
-	printf("philo %d\n", data->philo->num);
-	pthread_mutex_unlock(data->lock);
+	philo = (t_philo *)input;
+	while (!philo->dead)
+	{
+		pthread_mutex_lock(philo->avail_forks[0]);
+		pthread_mutex_lock(philo->avail_forks[1]);
+		gettimeofday(&time, NULL);
+		pthread_mutex_lock(&philo->data->lock_print);
+		printf("%ldms philosopher %d has taken a fork\n", get_timestamp(time, philo->data->start_time), philo->num);
+		printf("%ldms philosopher %d is eating\n", get_timestamp(time, philo->data->start_time), philo->num);
+		pthread_mutex_unlock(&philo->data->lock_print);
+		usleep(philo->data->time_to_eat * 1000);
+		death_timer = 0;
+		pthread_mutex_unlock(philo->avail_forks[0]);
+		pthread_mutex_unlock(philo->avail_forks[1]);
+		gettimeofday(&time, NULL);
+		pthread_mutex_lock(&philo->data->lock_print);
+		printf("%ldms philosopher %d is sleeping\n", get_timestamp(time, philo->data->start_time), philo->num);
+		pthread_mutex_unlock(&philo->data->lock_print);
+		death_timer += philo->data->time_to_sleep;
+		if (death_timer >= philo->data->time_to_die)
+		{
+			death_timer -= philo->data->time_to_die;
+			usleep(death_timer * 1000);
+			printf("%ldms philosopher %d has died\n", get_timestamp(time, philo->data->start_time), philo->num);
+		}
+		usleep(philo->data->time_to_sleep * 1000);
+		gettimeofday(&time, NULL);
+		pthread_mutex_lock(&philo->data->lock_print);
+		printf("%ldms philosopher %d is thinking\n", get_timestamp(time, philo->data->start_time), philo->num);
+		pthread_mutex_unlock(&philo->data->lock_print);
+		if (death_timer >= philo->data->time_to_die)
+		{
+			death_timer -= philo->data->time_to_die;
+			usleep(death_timer * 1000);
+			printf("%ldms philosopher %d has died\n", get_timestamp(time, philo->data->start_time), philo->num);
+		}
+	}
 	return (NULL);
 }
