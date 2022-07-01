@@ -38,6 +38,7 @@ typedef struct s_philo {
 	pthread_mutex_t	*avail_forks[2];
 	pthread_t		philthread;
 	t_data			*data;
+	struct s_philo	*next;
 }	t_philo;
 
 int		ph_atoi(const char *str);

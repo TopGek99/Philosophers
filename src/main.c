@@ -46,11 +46,15 @@ int	main(int argc, char *argv[])
 		pthread_mutex_init(&data.forks[i++], NULL);
 	pthread_mutex_init(&data.lock_print, NULL);
 	i = 0;
-	philos[i].avail_forks[0] = &data.forks[data.amount_of_philo - 1];
+	philos[i].avail_forks[0] = &data.forks[data.amount_of_philo - 1];\
 	while (i < data.amount_of_philo)
 	{
 		if (i != 0)
 			philos[i].avail_forks[0] = &data.forks[i - 1];
+		if (i < data.amount_of_philo - 1)
+			philos[i].next = &philos[i+1];
+		else
+			philos[i].next = &philos[0];
 		philos[i].avail_forks[1] = &data.forks[i];
 		philos[i].data = &data;
 		philos[i].num = i + 1;
