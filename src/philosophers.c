@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:14 by arowe             #+#    #+#             */
-/*   Updated: 2022/06/06 19:50:49 by alex             ###   ########.fr       */
+/*   Updated: 2022/07/01 16:53:23 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,15 @@ long	get_timestamp(struct timeval now, struct timeval start)
 	return (((now.tv_sec * 1000) + now.tv_usec / 1000) - ((start.tv_sec * 1000) + start.tv_usec / 1000));
 }
 
-int	psleep(t_philo *p, int t, long death_timer)
+int	psleep(int t)
 {
-	struct timeval time1;
-	struct timeval time2;
+	struct timeval	time1;
+	struct timeval	time2;
 
 	gettimeofday(&time1, NULL);
 	while (1)
 	{
 		gettimeofday(&time2, NULL);
-		if (get_timestamp(time2, time1) + death_timer >= p->data->time_to_die)
-		{
-			p->dead = true;
-			return (get_timestamp(time2, time1));
-		}
 		if (get_timestamp(time2, time1) >= t)
 			return (get_timestamp(time2, time1));
 		usleep(100);
@@ -88,109 +83,54 @@ void	*one_philo_die(t_philo *p)
 	return (NULL);
 }
 
-void	eat(t_philo *philo)
+void	*check_death(void *input)
 {
-	struct timeval t;
+	t_philo			*philo;
+	pthread_t		tid;
+	int				eat_no;
+	struct timeval	start;
+	struct timeval	curr;
 
-	pthread_mutex_lock(philo->avail_forks[0]);
-	pthread_mutex_lock(philo->avail_forks[1]);
-	gettimeofday(&t, NULL);
+	philo = (t_philo *)input;
+	tid = philo->deaththread;
+	philo->times_eaten++;
+	eat_no = philo->times_eaten;
+	gettimeofday(&start, NULL);
+	gettimeofday(&curr, NULL);
+	while (get_timestamp(curr, start) < philo->data->time_to_die)
+	{
+		if (philo->times_eaten > eat_no || philo->deaththread != tid || philo->data->full_philos == philo->data->amount_of_philo)
+		{
+			// if (philo->data->full_philos == philo->data->amount_of_philo)
+			// 	printf("philo %d returning\n", philo->num);
+			return (NULL);
+		}
+		psleep(10);
+		gettimeofday(&curr, NULL);
+	}
+	if (philo->data->anydead || philo->deaththread != tid || philo->data->full_philos == philo->data->amount_of_philo)
+	{
+		// if (philo->data->full_philos == philo->data->amount_of_philo)
+		// 	printf("philo %d returning\n", philo->num);
+		return (NULL);
+	}
 	pthread_mutex_lock(&philo->data->lock_print);
-	printf("%ldms philosopher %d has taken a fork\n", get_timestamp(t, philo->data->start_time), philo->num);
-	printf("%ldms philosopher %d is eating\n", get_timestamp(t, philo->data->start_time), philo->num);
-	pthread_mutex_unlock(&philo->data->lock_print);
-	psleep(philo, philo->data->time_to_eat, 0);
-	pthread_mutex_unlock(philo->avail_forks[0]);
-	pthread_mutex_unlock(philo->avail_forks[1]);
-}
-
-void	philo_sleep(t_philo *philo)
-{
-	struct timeval t;
-
-	gettimeofday(&t, NULL);
-	pthread_mutex_lock(&philo->data->lock_print);
-	printf("%ldms philosopher %d is sleeping\n", get_timestamp(t, philo->data->start_time), philo->num);
-	pthread_mutex_unlock(&philo->data->lock_print);
-	psleep(philo, philo->data->time_to_sleep, 0);
-}
-
-void	think(t_philo *philo)
-{
-	struct timeval t;
-
-	gettimeofday(&t, NULL);
-	pthread_mutex_lock(&philo->data->lock_print);
-	printf("%ldms philosopher %d is thinking\n", get_timestamp(t, philo->data->start_time), philo->num);
-	pthread_mutex_unlock(&philo->data->lock_print);
+	printf("%ldms philosopher %d has died\n", get_timestamp(curr, philo->data->start_time), philo->num);
+	philo->data->anydead = true;
+	return (NULL);
 }
 
 void	*do_stuff_philo(void *input)
 {
-	t_philo			*philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)input;
 	if (philo->data->amount_of_philo == 1)
 		return (one_philo_die(philo));
 	while (1)
 	{
-		eat(philo);
-		philo_sleep(philo);
-		think(philo);
+		if (eat(philo) || philo_sleep(philo) || think(philo))
+			break ;
 	}
 	return (NULL);
 }
-
-		// gettimeofday(&temp_time, NULL);
-		// if (time.tv_usec != 0)
-		// {
-		// 	death_timer += get_timestamp(temp_time, time);
-		// 	if (death_timer >= philo->data->time_to_die)
-		// 	{
-		// 		pthread_mutex_lock(&philo->data->lock_print);
-		// 		printf("%ldms philosopher %d has died\n", get_timestamp(temp_time, philo->data->start_time), philo->num);
-		// 		pthread_mutex_unlock(&philo->data->lock_print);
-		// 		join = philo;
-		// 		// pthread_mutex_unlock(philo->avail_forks[0]);
-		// 		// pthread_mutex_unlock(philo->avail_forks[1]);
-		// 		int j = 0;
-		// 		while (j < philo->data->amount_of_philo)
-		// 		{
-		// 			// printf("here\n");
-		// 			// pthread_mutex_destroy(join->avail_forks[0]);
-		// 			pthread_detach(join->next->philthread);
-		// 			join = join->next;
-		// 			j++;
-		// 		}
-		// 		break ;
-		// 	}
-		// }
-
-		// if (philo->dead)
-		// {
-		// 	pthread_mutex_lock(&philo->data->lock_print);
-		// 	printf("%ldms philosopher %d has died\n", get_timestamp(time, philo->data->start_time), philo->num);
-		// 	pthread_mutex_unlock(&philo->data->lock_print);
-		// 	join = philo;
-		// 	while (pthread_mutex_destroy(join->avail_forks[0]) == 0)
-		// 	{
-		// 		printf("here\n");
-		// 		join = join->next;
-		// 	}
-		// 	break ;
-		// }
-		
-		
-		// if (philo->dead)
-		// {
-		// 	pthread_mutex_lock(&philo->data->lock_print);
-		// 	printf("%ldms philosopher %d has died\n", get_timestamp(time, philo->data->start_time), philo->num);
-		// 	pthread_mutex_unlock(&philo->data->lock_print);
-		// 	join = philo;
-		// 	while (pthread_mutex_destroy(join->avail_forks[0]) == 0)
-		// 	{
-		// 		printf("here\n");
-		// 		join = join->next;
-		// 	}
-		// 	break ;
-		// }
