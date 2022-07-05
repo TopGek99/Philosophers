@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:14 by arowe             #+#    #+#             */
-/*   Updated: 2022/07/01 16:53:23 by alex             ###   ########.fr       */
+/*   Updated: 2022/07/05 10:34:37 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,25 @@ void	*check_death(void *input)
 	gettimeofday(&curr, NULL);
 	while (get_timestamp(curr, start) < philo->data->time_to_die)
 	{
-		if (philo->times_eaten > eat_no || philo->deaththread != tid || philo->data->full_philos == philo->data->amount_of_philo)
+		if (philo->times_eaten > eat_no || philo->deaththread != tid || philo->data->full_philos >= philo->data->amount_of_philo)
 		{
-			// if (philo->data->full_philos == philo->data->amount_of_philo)
+			// if (philo->data->full_philos >= philo->data->amount_of_philo)
 			// 	printf("philo %d returning\n", philo->num);
 			return (NULL);
 		}
 		psleep(10);
 		gettimeofday(&curr, NULL);
 	}
-	if (philo->data->anydead || philo->deaththread != tid || philo->data->full_philos == philo->data->amount_of_philo)
+	if (philo->data->anydead || philo->deaththread != tid || philo->data->full_philos >= philo->data->amount_of_philo)
 	{
-		// if (philo->data->full_philos == philo->data->amount_of_philo)
+		// if (philo->data->full_philos >= philo->data->amount_of_philo)
 		// 	printf("philo %d returning\n", philo->num);
 		return (NULL);
 	}
 	pthread_mutex_lock(&philo->data->lock_print);
-	printf("%ldms philosopher %d has died\n", get_timestamp(curr, philo->data->start_time), philo->num);
+	if (!philo->data->anydead)
+		printf("%ldms philosopher %d has died\n", get_timestamp(curr, philo->data->start_time), philo->num);
+	pthread_mutex_unlock(&philo->data->lock_print);
 	philo->data->anydead = true;
 	return (NULL);
 }
@@ -127,6 +129,8 @@ void	*do_stuff_philo(void *input)
 	philo = (t_philo *)input;
 	if (philo->data->amount_of_philo == 1)
 		return (one_philo_die(philo));
+	if (philo->num % 2 == 0)
+		psleep(philo->data->time_to_eat);
 	while (1)
 	{
 		if (eat(philo) || philo_sleep(philo) || think(philo))

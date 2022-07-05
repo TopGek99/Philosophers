@@ -31,6 +31,7 @@ typedef struct s_thread_data {
 	struct timeval			start_time;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			lock_print;
+	pthread_mutex_t			death_lock;
 	bool					anydead;
 }	t_data;
 

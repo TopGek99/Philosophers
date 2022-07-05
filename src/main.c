@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:17 by arowe             #+#    #+#             */
-/*   Updated: 2022/07/01 18:18:44 by alex             ###   ########.fr       */
+/*   Updated: 2022/07/05 10:02:44 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char *argv[])
 	while (i < data.amount_of_philo)
 		pthread_mutex_init(&data.forks[i++], NULL);
 	pthread_mutex_init(&data.lock_print, NULL);
+	pthread_mutex_init(&data.death_lock, NULL);
 	i = 0;
 	philos[i].avail_forks[0] = &data.forks[data.amount_of_philo - 1];
 	while (i < data.amount_of_philo)
