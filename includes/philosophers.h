@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:20 by arowe             #+#    #+#             */
-/*   Updated: 2022/07/01 16:25:13 by alex             ###   ########.fr       */
+/*   Updated: 2022/07/05 12:22:20 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,11 @@ int		think(t_philo *philo);
 long	get_timestamp(struct timeval now, struct timeval start);
 int		psleep(int t);
 void	*check_death(void *input);
+long	get_timestamp(struct timeval now, struct timeval start);
+int		psleep(int t);
+void	*one_philo_die(t_philo *p);
+bool	death_loop(t_philo *philo, struct timeval *curr,
+	struct timeval *start, pthread_t tid);
+bool	should_exit(t_philo *philo, pthread_t tid);
 
 #endif

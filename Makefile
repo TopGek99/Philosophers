@@ -8,7 +8,7 @@ INC_DIR=includes
 _INC = philosophers.h
 INC = $(patsubst %, $(INC_DIR)/%, $(_INC))
 
-OBJ = philosophers.o main.o actions.o
+OBJ = philosophers.o main.o actions.o time.o
 
 all: $(NAME)
 

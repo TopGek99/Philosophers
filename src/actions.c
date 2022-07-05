@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:00:00 by alex              #+#    #+#             */
-/*   Updated: 2022/07/05 10:35:07 by alex             ###   ########.fr       */
+/*   Updated: 2022/07/05 12:26:29 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	eat(t_philo *philo)
 {
-	struct	timeval t;
+	struct timeval	t;
 
 	pthread_mutex_lock(philo->avail_forks[0]);
 	pthread_mutex_lock(philo->avail_forks[1]);
