@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:14 by arowe             #+#    #+#             */
-/*   Updated: 2022/07/05 12:22:34 by alex             ###   ########.fr       */
+/*   Updated: 2022/07/06 10:44:15 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,15 @@ void	*one_philo_die(t_philo *p)
 	return (NULL);
 }
 
-bool	should_exit(t_philo *philo, pthread_t tid)
+void	join_all(t_philo *philos, t_data *data)
 {
-	return (philo->data->anydead
-		|| philo->deaththread != tid
-		|| philo->data->full_philos >= philo->data->amount_of_philo);
-}
+	int	i;
 
-bool	death_loop(t_philo *philo, struct timeval *curr,
-	struct timeval *start, pthread_t tid)
-{
-	while (get_timestamp(*curr, *start) < philo->data->time_to_die)
+	i = 0;
+	while (i < data->amount_of_philo)
 	{
-		if (should_exit(philo, tid))
-			return (true);
-		psleep(10);
-		gettimeofday(curr, NULL);
+		pthread_join(philos[i].philthread, NULL);
+		pthread_join(philos[i].deaththread, NULL);
+		i++;
 	}
-	return (false);
 }
