@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:55:17 by arowe             #+#    #+#             */
-/*   Updated: 2022/07/06 10:44:56 by alex             ###   ########.fr       */
+/*   Updated: 2022/07/08 10:24:54 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ int	main(int argc, char *argv[])
 		i++;
 	}
 	join_all(philos, &data);
+	free(data.forks);
+	free(philos);
 	return (0);
 }
